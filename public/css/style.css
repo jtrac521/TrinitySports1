@@ -1,0 +1,58 @@
+body {
+  background-color: #ffffff;
+  background-color: #ECECEC;
+  font-size: 18px;
+  color: black;
+  font-family: 'Raleway', sans-serif;
+}
+
+h1 {
+  color: green;
+  font-size: 40px;
+  display: inline-block;
+  position: absolute;
+        left: 38%;
+        transform: translateX(-50%);
+  }
+
+h5 {
+color: black;
+}
+
+p {
+color: black;
+text-align: center;
+}
+
+div {
+  border-radius: 25px;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 50px;
+  margin-left: 50px;
+  background-color: #66ffff;
+  background-color: white;
+  overflow: auto;
+  padding: 20px;
+  text-align: center;
+}
+@ -52,7 +52,7 @@ table, th, td {
+}
+
+tr:hover {
+  color: black;
+  background-color: #ccfff8;
+  background-color: #E2EEEE;
+}
+
+a {
+@ -70,6 +70,8 @@ img {
+}
+
+footer {
+  background-color: #FDDC5C;
+  font-size: 50%;
+  text-align: center;
+  align-items: center;
+}
