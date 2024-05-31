@@ -1,0 +1,31 @@
+<%- include('../partials/header', {title:"TSPN"}, {data:data}, {userData: userData}, {dateToday: dateToday} ) -%>
+
+<% if (user) { %>
+<h2>Welcome, <%=user._json.email.split("@")[0]%>!</h2>
+
+
+<form action="/sport/addSport" method="POST">
+  <p style = "text-align:left;"> <i> Note: Teams can have a MAXIMUM of three games on the home page. If you want to add a new game, delete a past game. </i></p>
+  <label for="sportteam"> Which Sport?:</label>
+  <select id="sport" name="sport">
+    <% for(let sport in data){ %>
+      <% for(let team in data[sport]){ %>
+        <% if((userData[user._json.email]["sport"] == sport)||(userData[user._json.email]["sport"] == 'admin') && data[sport][team]["UpcomingGames"].length < 3) { %>
+      <option value="<%=sport%> <%=team%>"><%=sport%> <%=team%></option>
+      <%}}}%>
+    </select>
+    </br></br></br>
+    <label for="gamedate"> What Date?:</label>
+      <input type="date" id="date" name="date"
+         value="" onchange="console.log(this.value)"
+             min="2023-01-01" max="2023-12-31" required/>
+
+</ul>
+   <br></br></br>
+   <input type="submit" value="Add Game to Schedule" required/>
+</form>
+
+
+
+<% } %>
+<%- include('../partials/footer') -%>

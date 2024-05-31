@@ -28,11 +28,6 @@ app.use(require('./controllers/activity_controller'));
 
 //..............Start the server...............................//
 const port = process.env.PORT || 3000;
-app.set('port', port); //let heroku pick the port if needed
-
-let socketapi =require('./controllers/socketConnections');
-socketapi.io.attach(server);//attach sockets to the server
-
-server.listen(port, function() {
-  console.log('Server started at http://localhost:'+port+'.')
+app.listen(port, function() {
+  console.log('Server started at http://localhost:'+port+'.');
 });

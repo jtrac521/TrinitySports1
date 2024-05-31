@@ -1,0 +1,69 @@
+<%- include('../partials/header', {title:"TSPN"}, {data: data}, {userData: userData}, {dateToday: dateToday} ) -%>
+<script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
+
+  <h2 id = "nameDisplay" style = "font-family: Georgia; font-weight: bold; text-align: center;"></h2>
+  <h1 style = "font-family: Georgia; text-align: center;"> <%=sport%> Game On <%=dateToday%> </h1>
+  <br>
+  <br><br><br>
+
+    <% if(userData[user._json.email]["privileges"].includes('Scorekeeper') ||userData[user._json.email]["privileges"].includes('admin') ){ %>
+    <label for="trinityScore" style = "position: relative; left: calc(100vw / 3);"> Trinity Score:</label><input style = "position: relative; left: calc(100vw / 3);" type="number" id="trinityScore" min = "0" value="<%=homeScore%>">
+    <label for="awayScore" style = "position: relative; left: calc(100vw /3);"> Away Score:</label><input style = "position: relative; left: calc(100vw / 3);" type="number" id="awayScore" min = "0" value="<%=awayScore%>">
+    </br></br> <button type="button" style = "position: relative; left: calc(100vw /2.15);" value="sendButton" id = "sendButton"> Update Score </button>
+ <%} %>
+    <style>
+      .homeText {
+        font-family: Georgia;
+        font-weight: bold;
+        padding: 10px;
+        border: 1px solid blue;
+        text-align: center;
+        background-color: gold;
+      }
+      .awayText {
+        font-family: Georgia;
+        font-weight: bold;
+        padding: 10px;
+        border: 1px solid black;
+        text-align: center;
+        background-color: red;
+      }
+      </style>
+
+</br>
+<h1 class = "homeText" id = "home" style = "position: relative; left: calc(100vw / 2.85);">  <%=homeScore%> </h1><h1 class = "awayText" id = "away" style = "position: relative; left: calc(100vw / 1.9);"> <%=awayScore%> </h1>
+</br></br>
+<label for = "homeText" style = "position: relative; left: calc(100vw / 3);" > TRINITY </label> <label for = "awayText" style = "position: relative; left: calc(100vw / 1.99);"> AWAY </label>
+  <span id="numClientsDisplay"> Fans Watching: 0</span>
+  <script>
+    let socket = io.connect('/');//the default namespace
+    socket.emit('connectionEvent', {displayName:'<%=displayName%>'});
+    socket.on('announcement', function(data) {
+        let homeScore = document.getElementById('home');
+        let awayScore = document.getElementById('away');
+        if (data.sport == "<%=sport%>") {
+        homeScore.innerText = data.homeScore;
+        awayScore.innerText = data.awayScore;
+      }
+    });
+
+    socket.on('connectionEvent', function(data) {
+        //keep track of the current number of participants in the numClientsDisplay span
+        let numClientsDisplay = document.getElementById('numClientsDisplay');
+        let text = "Fans Watching: " + data.numClients;
+        numClientsDisplay.innerText = text;
+        let mDisplay = document.getElementById('nameDisplay');
+        text = data.message + data.displayName + "!";
+
+        mDisplay.innerText = text;
+    });
+
+    document.getElementById("sendButton").addEventListener('click', function(){
+      let homeScore = document.getElementById("trinityScore").value;
+        let awayScore = document.getElementById("awayScore").value;
+      console.log("sending: "+ homeScore + "VS" + awayScore );
+      socket.emit('announcement', {gender: "<%=gender%>", sport: "<%=sport%>", homeScore: homeScore, awayScore: awayScore} );
+    });
+
+</script>
+<%- include('../partials/footer') -%>

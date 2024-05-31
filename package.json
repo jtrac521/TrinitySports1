@@ -2,20 +2,21 @@
   "name": "express-servers-get",
   "version": "1.0.0",
   "description": "A Paper, Rock, Scissors game with multiple opponents",
+  "engines": {
+    "node": "20.x"
+  },
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "james-tractenberg",
+  "license": "MIT",
   "dependencies": {
     "axios": "^1.3.4",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-session": "^1.17.3",
-    "heroku": "^8.11.5",
-    "heroku-cli": "^7.0.9",
     "multer": "^1.4.5-lts.1",
     "passport": "^0.6.0",
     "passport-google-oauth": "^2.0.0",
@@ -24,5 +25,12 @@
     "sqlite3": "^5.1.6",
     "uuid": "^8.3.2"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "TrinitySports1"
+  },
+  "keywords": [
+    "heroku"
+  ]
 }

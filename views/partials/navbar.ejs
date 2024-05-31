@@ -1,0 +1,132 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" style="background-color:gold;" >
+    <a class="navbar-nav" href="/">
+      <img href="/" src="/logos/TSPN.png" width="120" height="50" alt="">
+    </a>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" style="color:blue;" href="/archives" > Archives </a>
+          </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" style="color:blue;" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false"> Scoreboard </a>
+          <ul class="dropdown-menu">
+              <% let x = 0; %>
+          <% for(let sport in data){ %>
+            <% for(let team in data[sport]){ %>
+              <% if(data[sport][team]["UpcomingGames"].length > 0) { %>
+                <% for (games in data[sport][team]["UpcomingGames"]) { %>
+                <% if(parseInt(data[sport][team]["UpcomingGames"][games].split("/")[0]) == parseInt(dateToday.split("/")[0]) && parseInt(data[sport][team]["UpcomingGames"][games].split("/")[1]) == parseInt(dateToday.split("/")[1])  ){ %>
+                      <%  x+=1; console.log(x) %>
+            <li><a class="dropdown-item" style="color:blue;" href= "/sport/<%=sport%>/<%=team%>/scoreboard"><%=team%> <%=sport%> Game</a></li>
+
+            <%}}}}}%>
+            <% if (x < 1) { %>
+              <li><a class="dropdown-item" style="color:blue;">No Games Today!</a></li>
+              <% } %>
+          </ul>
+            </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" style="color:blue;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Fall
+          </a>
+        <ul class="dropdown-menu">
+        <% for(let sport in data){ %>
+          <% for(let team in data[sport]){ %>
+            <% if(data[sport][team]["Season"] == "Fall"){ %>
+          <li><a class="dropdown-item" style="color:blue;" href= "/sport/<%=sport%>"><%=sport%></a></li>
+          <%break%>
+          <%}}}%>
+        </ul>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" style="color:blue;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Winter
+        </a>
+        <ul class="dropdown-menu">
+        <% for(let sport in data){ %>
+          <% for(let team in data[sport]){ %>
+            <% if(data[sport][team]["Season"] == "Winter"){ %>
+          <li><a class="dropdown-item" style="color:blue;" href= "/sport/<%=sport%>"><%=sport%></a></li>
+          <%break%>
+          <%}}}%>
+        </ul>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" style="color:blue;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Spring
+        </a>
+        <ul class="dropdown-menu">
+        <% for(let sport in data){ %>
+          <% for(let team in data[sport]){ %>
+            <% if(data[sport][team]["Season"] == "Spring"){ %>
+          <li><a class="dropdown-item" style="color:blue;" href= "/sport/<%=sport%>"><%=sport%></a></li>
+          <%break%>
+          <%}}}%>
+        </ul>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" style="color:blue;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Timeframe
+        </a>
+        <ul class="dropdown-menu">
+          <label for="start">Start date:</label>
+          <form action="/updatedIndex" method="GET">
+          <input type="date" id="date" name="date"
+                 value="" onchange="console.log(this.value)"
+                 min="2023-01-01" max="2023-12-31">
+                  <input type="submit" value="Timeframe" required/>
+          </form>
+</ul>
+    </li>
+    <% if (user) { %>
+
+      <%  if (userData[user._json.email]["privileges"].includes('admin') || userData[user._json.email]["privileges"].includes("Captain")) { %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" style="color:blue;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Upload
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" style="color:blue;" href= "/highlights/uploadText"> Game Information </a></li>
+            <li><a class="dropdown-item" style="color:blue;" href= "/highlights/uploadHighlights"> Highlights </a></li>
+            <li><a class="dropdown-item" style="color:blue;" href= "/highlights/uploadImages"> Images </a></li>
+            <li><a class="dropdown-item" style="color:blue;" href= "/sport/result"> Game Result </a></li>
+          </ul>
+        </li>
+        <% } %>
+
+<%  if (userData[user._json.email]["privileges"].includes('admin') || userData[user._json.email]["privileges"].includes("Captain")) { %>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" style="color:blue;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+  Edit Game Schedule
+    </a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" style="color:blue;" href= "/sport/addSport"> Add Game </a></li>
+      <li><a class="dropdown-item" style="color:blue;" href= "/sport/removeSport"> Remove Game </a></li>
+    </ul>
+  </li>
+  <% }} %>
+    <% if (user) { %>
+      <%  if (userData[user._json.email]["privileges"].includes('admin')) { %>
+        <li class="nav-item">
+          <a class="nav-link" style="color:blue;" href="/users" > Change User Privileges </a>
+            </li>
+          <% }}%>
+    <% if (user) { %>
+      <%  if (userData[user._json.email]["privileges"].includes('admin')) { %>
+        <li class="nav-item">
+          <a class="nav-link" style="color:blue;" href="/activity" > Activity </a>
+            </li>
+          <% }}%>
+      </ul>
+    <%if(user){%>
+    <small>Logged in as <%=user._json.email%></small>
+    <%}%>
+    <li class="nav-item">
+      <a class="nav-link" style="color:blue;" href="/auth/logout" > Log out </a>
+        </li>
+  </div>
+</nav>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script src="bootstrap-datepicker.XX.js" charset="UTF-8"></script>

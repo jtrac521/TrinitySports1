@@ -1,0 +1,23 @@
+<%- include('../partials/header', {title:"TSPN"}, {data:data}, {userData: userData}, {dateToday: dateToday} ) -%>
+
+<% if (user) { %>
+<h2>Welcome, Admin <%=user._json.email.split("@")[0]%>!</h2>
+
+<form action="/users" method="POST">
+  <label for="Game Information"> What is the user's email?:</label>
+  <input class="lead" type="text" id="userEmail" name="userEmail" value="">
+<br> <br> <br>
+  <label for="upcominggames"> What is their role?:</label>
+  <select id="privileges" name="privileges">
+    <option value="admin">Admin</option>
+    <option value="Scorekeeper">Scorekeeper </option>
+    <% for (sports in data) { %>
+    <option value="<%=sports%> Captain"> <%=sports%> Captain</option>
+    <%}%>
+    </select>
+    <br><br>
+      <input class="lead" type="submit" value="Update User Privileges!">
+</form>
+
+<% } %>
+<%- include('../partials/footer') -%>

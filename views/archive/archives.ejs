@@ -1,0 +1,26 @@
+<%- include('../partials/header', {title:"TSPN"}, {data:data}, {userData: userData} ) -%>
+
+<h1> Trinity Team Archives! </h1>
+
+<body>
+  <% for (sport in archives) { %>
+    <% for (gender in archives[sport]) { %>
+
+<div class="card" style="width: 100rem;">
+<div class="card-body">
+  <% if (gender != "Championships") { %>
+  <h5 class="card-title"><%=gender%> <%=sport%> Past Championships: <%=archives[sport][gender]["Championships"]%></h5>
+  <%} else { %>
+  <h5 class="card-title"> <%=sport%> Past Championships: <%=archives[sport]["Championships"]%></h5>
+<% } %>
+</div>
+</div>
+
+<% }} %>
+
+</body>
+
+
+
+
+  <%- include('../partials/footer') -%>
